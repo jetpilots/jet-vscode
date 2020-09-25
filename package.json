@@ -1,0 +1,40 @@
+{
+    "name": "jet-lang",
+    "displayName": "Jet language Support",
+    "description": "Syntax highlighting and support for Jet, the next-generation language of high-performance computing",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.37.0"
+    },
+    "categories": [
+        "Programming Languages",
+        "Snippets"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "jet-lang",
+                "aliases": [
+                    "Jet"
+                ],
+                "extensions": [
+                    "jet"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "jet-lang",
+                "scopeName": "source.check",
+                "path": "./syntaxes/check.tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "jet-lang",
+                "path": "snippets.json"
+            }
+        ]
+    }
+}

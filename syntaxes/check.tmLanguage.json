@@ -1,0 +1,298 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "jet-lang",
+	"patterns": [
+		{
+			"include": "#funcDecl"
+		},
+		{
+			"include": "#issuetags"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#regex"
+		},
+		{
+			"include": "#units"
+		},
+		{
+			"include": "#funcCall"
+		},
+		{
+			"include": "#variables"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#booleans"
+		},
+		{
+			"include": "#basicTypes"
+		},
+		{
+			"include": "#types"
+		},
+		{
+			"include": "#operators"
+		},
+		{
+			"include": "#brackets"
+		},
+		{
+			"include": "#templateParams"
+		},
+		{
+			"include": "#argLabelsOnNewLine"
+		},
+		{
+			"include": "#lastResortIdents"
+		}
+	],
+	"repository": {
+		"funcDecl": {
+			"captures": {
+				"1": {
+					"name": "keyword.control.check"
+				},
+				"2": {
+					"name": "entity.name.function.check"
+				},
+				"3": {
+					"name": "meta.function-call.check"
+				}
+			},
+			"match": "\\b(function|method|test|set|get) ([a-z][.a-zA-Z0-9]*)"
+		},
+		"constructor": {
+			"captures": {
+				"1": {
+					"name": "keyword.operator.new"
+				}
+			},
+			"match": "\\b([_A-Z][a-z.A-Z0-9_]*)\\("
+		},
+		"funcCall": {
+			"captures": {
+				"1": {
+					"name": "meta.function-call.check"
+				},
+				"2": {
+					"name": "meta.function-call.check"
+				},
+				"3": {
+					"name": "meta.function-call.check"
+				}
+			},
+			"match": "\\b([a-z_][_a-zA-Z0-9]*)(?=\\()"
+		},
+		"variables": {
+			"captures": {
+				"1": {
+					"name": "keyword.other.check"
+				},
+				"2": {
+					"name": "xxxxvariable.name.check"
+				}
+			},
+			"match": "\\s*(var|let) ([_a-zA-Z][a-zA-Z0-9]*)"
+		},
+		"argLabelsOnNewLineXXX": {
+			"captures": {
+				"1": {
+					"name": "meta.function-call.check"
+				},
+				"2": {
+					"name": "xxxxvariable.name.check"
+				}
+			},
+			"match": "^\\s*([a-z][a-zA-Z0-9]*) ([a-z][a-zA-Z0-9]*)(: | = )"
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.check",
+					"match": "\\b(if|while|for|else|match|case|warn|do|error|debug|skip|deprecated|break|return|method|function|extends|then|cheater|of|to|by|import|export|shared|only|get|set|is|check|test|within|type|enum|with|from|on|alias|handler|event|try|throw|catch|always|result|throws|declare|ensures|requires|value)\\b"
+				},
+				{
+					"name": "keyword.control.check",
+					"match": "^ *end\\b"
+				}
+			]
+		},
+		"templateParams": {
+			"patterns": [
+				{
+					"name": "variable.name.check",
+					"match": "\\b(ch|os[.](path|info)|os|mac|net|http|ssh|ftp|pop|imap|dom|win|gtk|ui|str|io)[.]\\b"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.check",
+			"begin": "(\"|')",
+			"end": "\\1",
+			"patterns": [
+				{
+					"name": "constant.character.escape.check",
+					"match": "\\{[a-z.0-9,A-Z*_/~-]*\\}|\\[\\n'\"tbr]|\\\\0\\d\\d|\\\\\\w"
+				},
+				{
+					"name": "variable.name.check",
+					"match": "\\$[a-z][a-z.0-9A-Z]*|\\$\\([a-z.0-9,A-Z-]*\\)(\\([.0-9-]+\\))?"
+				}
+			]
+		},
+		"regex": {
+			"name": "variable.name.check",
+			"begin": "`",
+			"end": "`",
+			"patterns": [
+				{
+					"name": "constant.character.escape.check",
+					"match": "\\\\."
+				},
+				{
+					"name": "comment.line.check",
+					"match": "#.*$"
+				}
+			]
+		},
+		"units": {
+			"captures": {
+				"1": {
+					"name": "string.units.check"
+				}
+			},
+			"match": "(\\|[a-zA-Z1][a-zA-Z0-9./]*)"
+		},
+		"issuetadgs": {
+			"patterns": [
+				{
+					"name": "string.issuetag.check",
+					"match": "#[0-9]+"
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.check",
+					"match": "#.*$"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "variable.name.check"
+						}
+					},
+					"match": "(\\||~ \\||[\\d.]+% \\|)"
+				}
+			]
+		},
+		"basicTypsdes": {
+			"patterns": [
+				{
+					"name": "support.type.check",
+					"match": "\\b(Text|Number|YesOrNo)\\b"
+				}
+			]
+		},
+		"types": {
+			"patterns": [
+				{
+					"captures": {
+						"1": {
+							"name": "keyword.control.check"
+						},
+						"2": {
+							"name": "support.type.check"
+						}
+					},
+					"match": " *(type|enum|extends| as| or|:::| ::) +(<?[A-Z][a-z.A-Z0-9]*>?)"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "support.type.check"
+						}
+					},
+					"match": "\\b([A-Z][a-zA-Z0-9]*)\\b"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "support.type.check"
+						}
+					},
+					"match": "\\b::([A-Z][a-zA-Z0-9]*)\\b"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "support.type.check"
+						}
+					},
+					"match": "(?<=\\[ *)([A-Z][a-z.A-Z, 0-9]*)(?= *\\])"
+				}
+			]
+		},
+		"operators": {
+			"patterns": [
+				{
+					"name": "keyword.operator.logical.check",
+					"match": "([<>!=/+\\-.:*/]=|[<!&>:?=+\\-\\\\*./^]|\\b(and|or|not|contains|intersects|in)\\b)"
+				}
+			]
+		},
+		"numbers": {
+			"patterns": [
+				{
+					"name": "constant.numeric.check",
+					"match": "\\bend\\b|\\b-?[0-9']+(\\.[0-9']+)?([dDEe]-?[0-9']+)?i?\\b|\\b-?[0-9]+x[0-9]+\\b"
+				}
+			]
+		},
+		"brackets": {
+			"patterns": [
+				{
+					"name": "meta.function-call.check",
+					"match": "[(){}\\[\\]]"
+				}
+			]
+		},
+		"booleans": {
+			"patterns": [
+				{
+					"name": "constant.language.check",
+					"match": "\\b(yes|no|nil|nan|inf|tiny|huge)\\b| \\.[a-z][A-Za-z0-9]*"
+				}
+			]
+		},
+		"lastResortIdents": {
+			"patterns": [
+				{
+					"captures": {
+						"1": {
+							"name": "keyword.operator.logical.check"
+						}
+					},
+					"match": "(?<=[(,]) ?([a-z][a-zA-Z0-9]+) ?(?==)"
+				},
+				{
+					"name": "xxxvariable.name.check",
+					"match": "\\b[a-z][A-Za-z0-9]*\\.\\b"
+				}
+			]
+		}
+	},
+	"scopeName": "source.check"
+}

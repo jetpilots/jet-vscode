@@ -1,0 +1,65 @@
+{
+    "check": {
+        "prefix": "check",
+        "body": "check($0)",
+        "description": "Add a new check"
+    },
+    "for": {
+        "prefix": "for",
+        "body": [
+            "for ${1:variable} in ${2:range}",
+            "\t$0",
+            "end for"
+        ],
+        "description": "Loop over a range or collection"
+    },
+    "for-do": {
+        "prefix": "for-do",
+        "body": [
+            "for ${1:variable} in ${2:range} do $0"
+        ],
+        "description": "1-line loop over a range or collection"
+    },
+    "func": {
+        "prefix": "function",
+        "body": [
+            "function ${1:name}(${2:arguments}): ${3:type}",
+            "\t$0",
+            "end function"
+        ],
+        "description": "Create a new function"
+    },
+    "type": {
+        "prefix": "type",
+        "body": [
+            "type ${1:name}<${2:parameters}>",
+            "\tbase ${3:baseType}",
+            "\tvar $0",
+            "end type"
+        ],
+        "description": "Create a new type"
+    },
+    "import": {
+        "prefix": "import",
+        "body": [
+            "import ${1:module} as ${2:alias}"
+        ],
+        "description": "Import a module"
+    },
+    "if": {
+        "prefix": "if",
+        "body": [
+            "if ${1:condition}",
+            "\t$0",
+            "end if"
+        ],
+        "description": "Block conditional clause"
+    },
+    "if-then": {
+        "prefix": "if-then",
+        "body": [
+            "if ${1:condition} then $0"
+        ],
+        "description": "1-line conditional clause"
+    }
+}
