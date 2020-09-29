@@ -18,6 +18,12 @@
 			"include": "#units"
 		},
 		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#operators"
+		},
+		{
 			"include": "#funcCall"
 		},
 		{
@@ -25,9 +31,6 @@
 		},
 		{
 			"include": "#comments"
-		},
-		{
-			"include": "#keywords"
 		},
 		{
 			"include": "#numbers"
@@ -40,9 +43,6 @@
 		},
 		{
 			"include": "#types"
-		},
-		{
-			"include": "#operators"
 		},
 		{
 			"include": "#brackets"
@@ -70,7 +70,7 @@
 					"name": "meta.function-call.check"
 				}
 			},
-			"match": "\\b(function|method|test|set|get) ([a-z][.a-zA-Z0-9]*)"
+			"match": "\\b(func|method|function|fn|test|set|get) ([a-z][.a-zA-Z0-9]*)"
 		},
 		"constructor": {
 			"captures": {
@@ -100,7 +100,7 @@
 					"name": "keyword.other.check"
 				},
 				"2": {
-					"name": "xxxxvariable.name.check"
+					"name": "variable.name.check"
 				}
 			},
 			"match": "\\s*(var|let) ([_a-zA-Z][a-zA-Z0-9]*)"
@@ -120,7 +120,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.check",
-					"match": "\\b(if|while|for|else|match|case|warn|do|error|debug|skip|deprecated|break|return|method|function|extends|then|cheater|of|to|by|import|export|shared|only|get|set|is|check|test|within|type|enum|with|from|on|alias|handler|event|try|throw|catch|always|result|throws|declare|ensures|requires|value)\\b"
+					"match": "->|\\b(if|while|for|else|match|case|warn|do|error|debug|skip|deprecated|break|function|fn|return|method|func|extends|then|cheater|of|to|by|import|export|shared|only|get|set|is|check|test|within|type|enum|with|from|on|alias|handler|event|try|throw|catch|always|result|throws|declare|ensures|requires)\\b"
 				},
 				{
 					"name": "keyword.control.check",
@@ -152,7 +152,7 @@
 			]
 		},
 		"regex": {
-			"name": "variable.name.check",
+			"name": "constant.numeric.check",
 			"begin": "`",
 			"end": "`",
 			"patterns": [
@@ -217,7 +217,7 @@
 							"name": "support.type.check"
 						}
 					},
-					"match": " *(type|enum|extends| as| or|:::| ::) +(<?[A-Z][a-z.A-Z0-9]*>?)"
+					"match": "\\b(type|enum|extends| as| or|:::|::) +(<?[A-Z][a-z.A-Z0-9]*>?)"
 				},
 				{
 					"captures": {
@@ -226,6 +226,14 @@
 						}
 					},
 					"match": "\\b([A-Z][a-zA-Z0-9]*)\\b"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "keyword.control.check"
+						}
+					},
+					"match": "^(value )"
 				},
 				{
 					"captures": {
@@ -249,7 +257,27 @@
 			"patterns": [
 				{
 					"name": "keyword.operator.logical.check",
-					"match": "([<>!=/+\\-.:*/]=|[<!&>:?=+\\-\\\\*./^]|\\b(and|or|not|contains|intersects|in)\\b)"
+					"match": "([<>!=/+\\-.:*/]=|[<!&>:?=+\\-\\\\*./^]|\\b(and|or|not|contains|intersects|in)\\b)| \\.[a-z][A-Za-z0-9]*"
+				},
+				{
+					"name": "variable.name.check",
+					"match": "\\b[a-zA-Z][a-zA-Z0-9]*(?=![^=])"
+				},
+				{
+					"name": "variable.name.check",
+					"match": "(?<=&)[A-Za-z][a-zA-Z0-9]*\\b"
+				},
+				{
+					"name": "variable.name.check",
+					"match": "^ *[a-z][a-zA-Z0-9]*(?=(\\[.*\\])? *([+-/*^%]=|=))"
+				},
+				{
+					"name": "variable.name.check",
+					"match": "(?<= (then|do) ) *[a-z][a-zA-Z0-9]*(?=(\\[.*\\])? *([+-/*^%]=|=))"
+				},
+				{
+					"match": "(?<=\\[ *)([0-9]+D)\\b",
+					"name": "keyword.operator.array.check"
 				}
 			]
 		},
@@ -257,7 +285,7 @@
 			"patterns": [
 				{
 					"name": "constant.numeric.check",
-					"match": "\\bend\\b|\\b-?[0-9']+(\\.[0-9']+)?([dDEe]-?[0-9']+)?i?\\b|\\b-?[0-9]+x[0-9]+\\b"
+					"match": "\\bend\\b|\\b-?[0-9']+(\\.[0-9']+)?([dDEe]-?[0-9']+)?[ikMGTPEYmun]?\\b|\\b-?[0-9]+x[0-9]+\\b"
 				}
 			]
 		},
@@ -273,7 +301,7 @@
 			"patterns": [
 				{
 					"name": "constant.language.check",
-					"match": "\\b(yes|no|nil|nan|inf|tiny|huge)\\b| \\.[a-z][A-Za-z0-9]*"
+					"match": "\\b(yes|no|nil|nan|inf|tiny|huge)\\b"
 				}
 			]
 		},
@@ -285,7 +313,7 @@
 							"name": "keyword.operator.logical.check"
 						}
 					},
-					"match": "(?<=[(,]) ?([a-z][a-zA-Z0-9]+) ?(?==)"
+					"match": "(?<=[(,{]) ?([a-z][a-zA-Z0-9]*) ?(?==)"
 				},
 				{
 					"name": "xxxvariable.name.check",
