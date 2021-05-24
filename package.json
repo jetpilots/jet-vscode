@@ -10,6 +10,13 @@
         "Programming Languages",
         "Snippets"
     ],
+    "activationEvents": [
+        "onLanguage:jet-lang"
+    ],
+    "main": "./out/src/extension",
+    "extensionDependencies": [
+        "ms-vscode.cpptools"
+    ],
     "contributes": {
         "languages": [
             {

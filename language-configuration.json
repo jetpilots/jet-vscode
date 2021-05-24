@@ -1,11 +1,11 @@
 {
     "comments": {
         // symbol used for single line comment. Remove this entry if your language does not support line comments
-        "lineComment": "#",
+        "lineComment": "~",
         // symbols used for start and end a block comment. Remove this entry if your language does not support block comments
         "blockComment": [
-            "#--",
-            "--#"
+            "---",
+            "---"
         ]
     },
     // symbols used as brackets
@@ -80,5 +80,16 @@
             "'",
             "'"
         ]
-    ]
+    ],
+    "indentationRules": {
+        "unIndentedLinePattern": "^\\s*~.*",
+        "increaseIndentPattern": {
+            "pattern": "^\\s*(func|for|type|do|if|case|while)\\b.*$|\\s*(else|else\\s*if)\\b.*$",
+            "flags": "i"
+        },
+        "decreaseIndentPattern": {
+            "pattern": "^\\s*end\\s*(match|if|for|func|while)?\\b.*$|^\\s*(else|case)\\b.*$",
+            "flags": "i"
+        }
+    }
 }

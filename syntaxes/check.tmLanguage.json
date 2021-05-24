@@ -9,6 +9,9 @@
 			"include": "#issuetags"
 		},
 		{
+			"include": "#atstrings"
+		},
+		{
 			"include": "#strings"
 		},
 		{
@@ -24,6 +27,9 @@
 			"include": "#operators"
 		},
 		{
+			"include": "#numbers"
+		},
+		{
 			"include": "#funcCall"
 		},
 		{
@@ -33,13 +39,7 @@
 			"include": "#comments"
 		},
 		{
-			"include": "#numbers"
-		},
-		{
 			"include": "#booleans"
-		},
-		{
-			"include": "#basicTypes"
 		},
 		{
 			"include": "#types"
@@ -70,7 +70,7 @@
 					"name": "meta.function-call.check"
 				}
 			},
-			"match": "\\b(func|method|function|fn|test|set|get) ([a-z][.a-zA-Z0-9]*)"
+			"match": "\\b(decl func|func|redef) ([a-z][.a-zA-Z0-9]*)?"
 		},
 		"constructor": {
 			"captures": {
@@ -78,7 +78,7 @@
 					"name": "keyword.operator.new"
 				}
 			},
-			"match": "\\b([_A-Z][a-z.A-Z0-9_]*)\\("
+			"match": "\\b([A-Z_][_a-z.A-Z0-9]*)\\("
 		},
 		"funcCall": {
 			"captures": {
@@ -92,7 +92,7 @@
 					"name": "meta.function-call.check"
 				}
 			},
-			"match": "\\b([a-z_][_a-zA-Z0-9]*)(?=\\()"
+			"match": "\\b([a-z_][a-z._A-Z0-9]*)(?=!?\\()"
 		},
 		"variables": {
 			"captures": {
@@ -100,10 +100,10 @@
 					"name": "keyword.other.check"
 				},
 				"2": {
-					"name": "variable.name.check"
+					"name": "xxxvariable.name.check"
 				}
 			},
-			"match": "\\s*(var|let) ([_a-zA-Z][a-zA-Z0-9]*)"
+			"match": "^\\s*(var) ([_a-zA-Z][a-zA-Z0-9]*)"
 		},
 		"argLabelsOnNewLineXXX": {
 			"captures": {
@@ -120,18 +120,28 @@
 			"patterns": [
 				{
 					"name": "keyword.control.check",
-					"match": "->|\\b(if|while|for|else|match|case|warn|do|error|debug|skip|deprecated|break|function|fn|return|method|func|extends|then|cheater|of|to|by|import|export|shared|only|get|set|is|check|test|within|type|enum|with|from|on|alias|handler|event|try|throw|catch|always|result|throws|declare|ensures|requires)\\b"
+					"match": "^\\s*(while|else|match|case|deprecated|import|test|event|catch|hold|for)\\b|\\b(do|continue|extends|break|as|pass|yield|return|then|if|check|with|throw|raise|where|result|or (continue|pass|return|break|throw))\\b"
 				},
 				{
 					"name": "keyword.control.check",
-					"match": "^ *end\\b"
+					"match": "^\\s*end\\b"
+				},
+				{
+					"name": "keyword.control.check",
+					"nameh": "constant.numeric.check",
+					"match": "\\bend\\b"
+				},
+				{
+					"name": "constant.numeric.check",
+					"match": "#[a-zA-Z0-9]*",
+					"comment": "Inferred enum members"
 				}
 			]
 		},
 		"templateParams": {
 			"patterns": [
 				{
-					"name": "variable.name.check",
+					"name": "xxxvariable.name.check",
 					"match": "\\b(ch|os[.](path|info)|os|mac|net|http|ssh|ftp|pop|imap|dom|win|gtk|ui|str|io)[.]\\b"
 				}
 			]
@@ -139,15 +149,37 @@
 		"strings": {
 			"name": "string.quoted.double.check",
 			"begin": "(\"|')",
-			"end": "\\1",
+			"end": "(?<!\\\\)\\1",
+			"patterns": [
+				{
+					"name": "keyword.operator.logical.check",
+					"match": "\\{[^{}]+\\}|\\['\"]|\\\\0\\d\\d|\\\\\\w"
+				},
+				{
+					"name": "keyword.operator.logical.check",
+					"match": "\\$[a-z.0-9A-Z]+|\\$\\([a-z.0-9,A-Z-]*\\)(\\([.0-9-]+\\))?"
+				}
+			]
+		},
+		"atstrings": {
+			"name": "comment.line.check",
+			"begin": "^\\s*---\\s*$",
+			"end": "^\\s*---\\s*$",
 			"patterns": [
 				{
 					"name": "constant.character.escape.check",
-					"match": "\\{[a-z.0-9,A-Z*_/~-]*\\}|\\[\\n'\"tbr]|\\\\0\\d\\d|\\\\\\w"
-				},
+					"match": "^\\s*todo:"
+				}
+			]
+		},
+		"atstrihungs": {
+			"name": "string.quoted.double.check",
+			"begin": "(?<=@ *)(\"|')",
+			"end": "(?<!\\\\)\\1",
+			"patterns": [
 				{
-					"name": "variable.name.check",
-					"match": "\\$[a-z][a-z.0-9A-Z]*|\\$\\([a-z.0-9,A-Z-]*\\)(\\([.0-9-]+\\))?"
+					"name": "constant.character.escape.check",
+					"match": "\\{[a-z.0-9,A-Z*_/~-]*\\}|\\['\"]|\\\\0\\d\\d|\\\\\\w"
 				}
 			]
 		},
@@ -162,7 +194,7 @@
 				},
 				{
 					"name": "comment.line.check",
-					"match": "#.*$"
+					"match": "~.*$"
 				}
 			]
 		},
@@ -172,13 +204,13 @@
 					"name": "string.units.check"
 				}
 			},
-			"match": "(\\|[a-zA-Z1][a-zA-Z0-9./]*)"
+			"match": "(\\|[a-zA-Z1][a-zA-Z0-9./{}]*)"
 		},
-		"issuetadgs": {
+		"issuetagjs": {
 			"patterns": [
 				{
 					"name": "string.issuetag.check",
-					"match": "#[0-9]+"
+					"match": "#[a-zA-Z0-9]+"
 				}
 			]
 		},
@@ -186,7 +218,7 @@
 			"patterns": [
 				{
 					"name": "comment.line.check",
-					"match": "#.*$"
+					"match": "~.*$"
 				},
 				{
 					"captures": {
@@ -198,14 +230,6 @@
 				}
 			]
 		},
-		"basicTypsdes": {
-			"patterns": [
-				{
-					"name": "support.type.check",
-					"match": "\\b(Text|Number|YesOrNo)\\b"
-				}
-			]
-		},
 		"types": {
 			"patterns": [
 				{
@@ -214,18 +238,24 @@
 							"name": "keyword.control.check"
 						},
 						"2": {
+							"name": "keyword.control.check"
+						},
+						"3": {
 							"name": "support.type.check"
 						}
 					},
-					"match": "\\b(type|enum|extends| as| or|:::|::) +(<?[A-Z][a-z.A-Z0-9]*>?)"
+					"match": "^\\s*((decl )?type|extend|enum) +([A-Za-z_][a-z._A-Z0-9]*)"
 				},
 				{
 					"captures": {
 						"1": {
 							"name": "support.type.check"
+						},
+						"2": {
+							"name": "support.type.check"
 						}
 					},
-					"match": "\\b([A-Z][a-zA-Z0-9]*)\\b"
+					"match": "\\b([a-z][A-Za-z0-9.]*\\.)?([A-Z][a-zA-Z0-9]*)\\b"
 				},
 				{
 					"captures": {
@@ -257,23 +287,27 @@
 			"patterns": [
 				{
 					"name": "keyword.operator.logical.check",
-					"match": "([<>!=/+\\-.:*/]=|[<!&>:?=+\\-\\\\*./^]|\\b(and|or|not|contains|intersects|in)\\b)| \\.[a-z][A-Za-z0-9]*"
+					"match": "([<>!%=/+\\-.:*/]=|[<!_$,%&>:?=+\\-\\\\*./^]|\\b(and|or|not in|not|in|contains|intersects)\\b)"
 				},
 				{
 					"name": "variable.name.check",
-					"match": "\\b[a-zA-Z][a-zA-Z0-9]*(?=![^=])"
+					"match": "(?<=&|!\\()[A-Za-z_][a-z.A-Z_0-9]*\\b"
 				},
 				{
 					"name": "variable.name.check",
-					"match": "(?<=&)[A-Za-z][a-zA-Z0-9]*\\b"
+					"match": "[A-Za-z_][a-z.A-Z_0-9]*(?=\\!\\.)"
 				},
 				{
 					"name": "variable.name.check",
-					"match": "^ *[a-z][a-zA-Z0-9]*(?=(\\[.*\\])? *([+-/*^%]=|=))"
+					"match": "(?<=\\()[a-z_A-Z][a-z._A-Z0-9]*(?=![^=])"
 				},
 				{
 					"name": "variable.name.check",
-					"match": "(?<= (then|do) ) *[a-z][a-zA-Z0-9]*(?=(\\[.*\\])? *([+-/*^%]=|=))"
+					"match": "^\\s*[a-z_][a-z.A-Z_0-9]*(?=(\\[.*\\])? *([+-/*^%]=|= ))"
+				},
+				{
+					"name": "variable.name.check",
+					"match": "(?<= (then|do) ) *[a-z_][a-z._A-Z0-9]*(?=(\\[.*\\])? *([+-/*^%]=|= ))"
 				},
 				{
 					"match": "(?<=\\[ *)([0-9]+D)\\b",
@@ -285,7 +319,11 @@
 			"patterns": [
 				{
 					"name": "constant.numeric.check",
-					"match": "\\bend\\b|\\b-?[0-9']+(\\.[0-9']+)?([dDEe]-?[0-9']+)?[ikMGTPEYmun]?\\b|\\b-?[0-9]+x[0-9]+\\b"
+					"match": "\\b-?[0-9']+(\\.[0-9']+)?([dDEe]-?[0-9']+)?[ikMGTPEYmun]?\\b|\\b-?[0-9]+x[0-9]+\\b|0x[a-fA-F0-9]+"
+				},
+				{
+					"name": "constant.numeric.check",
+					"match": "@[a-zA-Z0-9]+\\([a-zA-Z0-9, ]+\\)"
 				}
 			]
 		},
