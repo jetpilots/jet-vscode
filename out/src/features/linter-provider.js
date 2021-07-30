@@ -8,7 +8,7 @@ class JetLintingProvider {
     constructor() { }
     doJetLint(textDocument) {
         // const errorRegex = /^([a-zA-Z]:\\)*([^:]*):([0-9]+):([0-9]+):\s+(.*)\s+.*?\s+(Error|Warning|Fatal Error):\s(.*)$/gm;
-        const errorRegex = /^([a-zA-Z]:\\)*([^:]*):([0-9]+):([0-9]+)(-[0-9]+)?: (error|warning): (.*)$/gm;
+        const errorRegex = /^([a-zA-Z]:\\)*([^:]*):([0-9]+):([0-9]+)(-[0-9]+)?: (error|warning|hint): (.*)$/gm;
         if (textDocument.languageId !== helper_1.LANGUAGE_ID || textDocument.uri.scheme !== "file") {
             return;
         }
@@ -52,9 +52,12 @@ class JetLintingProvider {
                     let startColumn = parseInt(elements[3]);
                     let endColumn = parseInt(elements[4]) * -1;
                     let type = elements[5]; // error or warning
-                    let severity = type.toLowerCase() === "warning"
-                        ? vscode.DiagnosticSeverity.Information
-                        : vscode.DiagnosticSeverity.Error;
+                    let severity = //
+                        type.toLowerCase() === "warning"
+                            ? vscode.DiagnosticSeverity.Warning
+                            : type.toLowerCase() === "hint"
+                                ? vscode.DiagnosticSeverity.Information
+                                : vscode.DiagnosticSeverity.Error;
                     let message = elements[6];
                     message = message.replace(/;;/g, "\n") + "\n";
                     startLine = Math.max(startLine, 1)
@@ -103,8 +106,8 @@ class JetLintingProvider {
         let argList = [
             ...args,
             ...helper_1.getIncludeParams(includePaths),
-            relPath,
-            "l"
+            "-l",
+            relPath
         ];
         return argList.map(arg => arg.trim()).filter(arg => arg !== "");
     }

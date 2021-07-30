@@ -58,7 +58,7 @@
 		}
 	],
 	"repository": {
-		"funcDecl": {
+		"funcDecjjjjjl": {
 			"captures": {
 				"1": {
 					"name": "keyword.control.check"
@@ -70,7 +70,7 @@
 					"name": "meta.function-call.check"
 				}
 			},
-			"match": "\\b(decl func|func|redef) ([a-z][.a-zA-Z0-9]*)?"
+			"match": "\\b(func|func decl|redef) ([a-z][.a-zA-Z0-9]*)?"
 		},
 		"constructor": {
 			"captures": {
@@ -78,7 +78,7 @@
 					"name": "keyword.operator.new"
 				}
 			},
-			"match": "\\b([A-Z_][_a-z.A-Z0-9]*)\\("
+			"match": "\\b([A-Z_][_a-zA-Z0-9]*)\\("
 		},
 		"funcCall": {
 			"captures": {
@@ -92,9 +92,9 @@
 					"name": "meta.function-call.check"
 				}
 			},
-			"match": "\\b([a-z_][a-z._A-Z0-9]*)(?=!?\\()"
+			"match": "\\b([a-z_][a-z_A-Z0-9]*)(?=!?\\()"
 		},
-		"variables": {
+		"varikkkables": {
 			"captures": {
 				"1": {
 					"name": "keyword.other.check"
@@ -120,7 +120,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.check",
-					"match": "^\\s*(while|else|match|case|deprecated|import|test|event|catch|hold|for)\\b|\\b(do|continue|extends|break|as|pass|yield|return|then|if|check|with|throw|raise|where|result|or (continue|pass|return|break|throw))\\b"
+					"match": "\\b(?i)(while|else|var|match|case|deprecated|type|enum|extends|func|decl|objc|def|redef|class|import|test|event|when|catch|hold|for|do|continue|extends|break|as|pass|yield|return|then|if|check|with|throw|raise|where|result|or (continue|pass|return|break|throw))\\b"
 				},
 				{
 					"name": "keyword.control.check",
@@ -233,7 +233,7 @@
 		"types": {
 			"patterns": [
 				{
-					"captures": {
+					"capturesjjjjj": {
 						"1": {
 							"name": "keyword.control.check"
 						},
@@ -244,7 +244,7 @@
 							"name": "support.type.check"
 						}
 					},
-					"match": "^\\s*((decl )?type|extend|enum) +([A-Za-z_][a-z._A-Z0-9]*)"
+					"matchbbbb": "\\b([A-Za-z_][a-z._A-Z0-9]*)\\b"
 				},
 				{
 					"captures": {
@@ -258,28 +258,28 @@
 					"match": "\\b([a-z][A-Za-z0-9.]*\\.)?([A-Z][a-zA-Z0-9]*)\\b"
 				},
 				{
-					"captures": {
+					"capturesnnn": {
 						"1": {
 							"name": "keyword.control.check"
 						}
 					},
-					"match": "^(value )"
+					"matchmmm": "^(value )"
 				},
 				{
-					"captures": {
+					"captureshhhh": {
 						"1": {
 							"name": "support.type.check"
 						}
 					},
-					"match": "\\b::([A-Z][a-zA-Z0-9]*)\\b"
+					"matchlll": "\\b::([A-Z][a-zA-Z0-9]*)\\b"
 				},
 				{
-					"captures": {
+					"capturesmmm": {
 						"1": {
 							"name": "support.type.check"
 						}
 					},
-					"match": "(?<=\\[ *)([A-Z][a-z.A-Z, 0-9]*)(?= *\\])"
+					"matcnnnh": "(?<=\\[ *)([A-Z][a-z.A-Z, 0-9]*)(?= *\\])"
 				}
 			]
 		},
