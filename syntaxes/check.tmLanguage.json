@@ -6,7 +6,7 @@
 			"include": "#funcDecl"
 		},
 		{
-			"include": "#issuetags"
+			"include": "#hints"
 		},
 		{
 			"include": "#atstrings"
@@ -19,6 +19,9 @@
 		},
 		{
 			"include": "#units"
+		},
+		{
+			"include": "#comments"
 		},
 		{
 			"include": "#keywords"
@@ -34,9 +37,6 @@
 		},
 		{
 			"include": "#variables"
-		},
-		{
-			"include": "#comments"
 		},
 		{
 			"include": "#booleans"
@@ -92,7 +92,7 @@
 					"name": "meta.function-call.check"
 				}
 			},
-			"match": "\\b([a-z_][a-z_A-Z0-9]*)(?=!?\\()"
+			"match": "\\b([a-z_][a-z_A-Z0-9~]*)(?=!?\\()"
 		},
 		"varikkkables": {
 			"captures": {
@@ -120,7 +120,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.check",
-					"match": "\\b(?i)(while|else|var|match|case|deprecated|type|enum|extends|func|decl|objc|def|redef|class|import|test|event|when|catch|hold|for|do|continue|extends|break|as|pass|yield|return|then|if|check|with|throw|raise|where|result|or (continue|pass|return|break|throw))\\b"
+					"match": "\\b(?i)(while|elif|else|var|match|case|deprecated|type|enum|extends|func|decl|objc|def|redef|class|import|test|event|when|catch|hold|for|do|continue|extends|break|as|pass|yield|return|then|if|check|with|throw|raise|where|result|or (continue|pass|return|private|break|throw))\\b"
 				},
 				{
 					"name": "keyword.control.check",
@@ -132,8 +132,8 @@
 					"match": "\\bend\\b"
 				},
 				{
-					"name": "constant.numeric.check",
-					"match": "#[a-zA-Z0-9]*",
+					"name": "string.quoted.double.check",
+					"match": "#[a-zA-Z0-9]+",
 					"comment": "Inferred enum members"
 				}
 			]
@@ -189,12 +189,12 @@
 			"end": "`",
 			"patterns": [
 				{
-					"name": "constant.character.escape.check",
-					"match": "\\\\."
+					"name": "keyword.operator.logical.check",
+					"match": "\\(\\?i\\)"
 				},
 				{
 					"name": "comment.line.check",
-					"match": "~.*$"
+					"match": "--.*$"
 				}
 			]
 		},
@@ -206,11 +206,11 @@
 			},
 			"match": "(\\|[a-zA-Z1][a-zA-Z0-9./{}]*)"
 		},
-		"issuetagjs": {
+		"hints": {
 			"patterns": [
 				{
-					"name": "string.issuetag.check",
-					"match": "#[a-zA-Z0-9]+"
+					"name": "keyword.operator.logical.check",
+					"match": "~[a-z]+"
 				}
 			]
 		},
@@ -218,7 +218,11 @@
 			"patterns": [
 				{
 					"name": "comment.line.check",
-					"match": "~.*$"
+					"match": "--.*$"
+				},
+				{
+					"name": "comment.line.check",
+					"match": "^#!.*$"
 				},
 				{
 					"captures": {
@@ -287,15 +291,19 @@
 			"patterns": [
 				{
 					"name": "keyword.operator.logical.check",
-					"match": "([<>!%=/+\\-.:*/]=|[<!_$,%&>:?=+\\-\\\\*./^]|\\b(and|or|not in|not|in|contains|intersects)\\b)"
+					"match": "([<>!%=/+\\-.:*/]=|[<!_$@,%&>:?=+\\-\\\\*./^]|\\b(and|or|not in|not|in)\\b)"
 				},
 				{
 					"name": "variable.name.check",
-					"match": "(?<=&|!\\()[A-Za-z_][a-z.A-Z_0-9]*\\b"
+					"match": "(?<=&)[A-Za-z_][a-z.A-Z_0-9]*\\b"
 				},
 				{
 					"name": "variable.name.check",
 					"match": "[A-Za-z_][a-z.A-Z_0-9]*(?=\\!\\.)"
+				},
+				{
+					"name": "variable.name.check",
+					"match": "\\b[A-Za-z_][a-z.A-Z_0-9]*(?=\\.[A-Za-z_][A-Za-z0-9_]*\\!\\()"
 				},
 				{
 					"name": "variable.name.check",
